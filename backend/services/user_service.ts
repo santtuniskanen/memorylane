@@ -13,6 +13,15 @@ class UserService {
         }
     }
 
+    static async getUserByID(userId: number): Promise<User | null> {
+        try {
+            const user = await UserModel.findUserByID(userId);
+            return user;
+        } catch (error) {
+            throw new Error('Error fetching getUserByID');
+        }
+    }
+
     static async createUser(user: User): Promise<void> {
         try {
             const hashedPassword = await hashPassword(user.password);

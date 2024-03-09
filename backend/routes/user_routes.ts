@@ -14,6 +14,21 @@ router.get('/users', async (req: Request, res: Response) => {
     }
 })
 
+router.get('/users/:id', async (req: Request, res: Response) => {
+    try {
+        const userId = parseInt(req.params.id);
+        const user = await UserService.getUserByID(userId);
+        if (user) {
+            res.status(200).json(user);
+        } else {
+            res.status(404).json({ error: 'User not found' })
+        }
+    } catch (error) {
+        const errorMessage = (error as Error).message;
+        res.status(500).json({ error: errorMessage });
+    }
+})
+
 router.post('/users', async (req: Request, res: Response) => {
     const { firstname, lastname, username, email, password } = req.body;
     try {
