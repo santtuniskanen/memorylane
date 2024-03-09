@@ -1,19 +1,11 @@
-const express = require('express');
-const db = require('./config/database');
+import express from 'express';
+import user_routes from './routes/user_routes';
 
 const app = express();
-const port = 8080;
 
-app.get('/', async (req, res) => {
-    try {
-        const result = await db.query('SELECT * FROM users');
-        res.json(result.rows);
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('Internal Server Error')
-    }
+app.use('/api', user_routes);
+
+const PORT = process.env.port || 3000;
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
-
-app.listen(port, () => {
-    console.log(`Listening on port ${port}...`)
-})

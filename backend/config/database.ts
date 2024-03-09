@@ -1,4 +1,5 @@
-const { Pool } = require('pg');
+import { Pool } from 'pg';
+import type { QueryResult } from 'pg';
 
 const pool = new Pool({
     user: 'santeri',
@@ -8,6 +9,13 @@ const pool = new Pool({
     database: 'web_planner'
 });
 
-module.exports = {
-    query: (text, params) => pool.query(text, params)
-};
+interface QueryFunction {
+    (text: string, params?: any[]): Promise<QueryResult<any>>;
+}
+const query: QueryFunction = async (text, params) => {
+    return await pool.query(text, params);
+}
+
+export default {
+    query
+}
