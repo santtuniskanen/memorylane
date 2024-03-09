@@ -17,8 +17,8 @@ export async function comparePassword(password: string, hashedPassword: string):
     /**
      * comparePassword() function compares input password
      * to the hashed password, for example, when logging in
-     * @param {string} password - takes the input password as
-     * a parameter to be compared to
+     * @param {string} password - takes the plain-text input 
+     * parameter to compare to hash.
      * @param {string} hashedPassword - exists in the database
      * and is created during the Sign Up process.
      * @returns {Promise<boolean>} - A promise, returning true
