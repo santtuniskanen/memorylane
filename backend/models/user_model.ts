@@ -3,9 +3,10 @@
 import db from '../config/database';
 
 export interface User {
-    id: number;
-    firstName: string;
-    lastName: string;
+    user_id: number;
+    firstname: string;
+    lastname: string;
+    username: string;
     email: string;
     password: string;
 }
@@ -13,13 +14,21 @@ export interface User {
 class UserModel {
     static async findAll(): Promise<User[]> {
         const query = 'SELECT * FROM users';
-        console.log('Executing SQL query:', query); // Debug statement
         try {
             const result = await db.query(query);
             return result.rows;
         } catch (error) {
-            console.error('Error fetching users:', error); // Debug statement
             throw new Error('Error fetching findAll');
+        }
+    }
+
+    static async CreateUser(user: User): Promise<void> {
+        const query = 'INSERT INTO users (firstname, lastname, username, email, password) VALUES ($1, $2, $3, $4, $5)';
+        const values = [user.firstname, user.lastname, user.username, user.email, user.password];
+        try {
+            await db.query(query, values);
+        } catch (error) {
+            throw new Error('Error creating user');
         }
     }
 }
