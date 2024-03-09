@@ -1,9 +1,6 @@
-// user_model.ts
-
 import db from '../config/database';
 
 export interface User {
-    user_id: number;
     firstname: string;
     lastname: string;
     username: string;
@@ -28,6 +25,7 @@ class UserModel {
         try {
             await db.query(query, values);
         } catch (error) {
+            console.error('Error creating user:', error);
             throw new Error('Error creating user');
         }
     }

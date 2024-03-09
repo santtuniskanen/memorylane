@@ -2,8 +2,8 @@ import { Pool } from 'pg';
 import type { QueryResult } from 'pg';
 
 const pool = new Pool({
-    user: 'santeri',
-    password: 'santeri123',
+    user: 'postgres',
+    password: '',
     host: 'localhost',
     port: 5432,
     database: 'web_planner'
