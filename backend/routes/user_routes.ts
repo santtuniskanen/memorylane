@@ -51,4 +51,19 @@ router.post('/users', async (req: Request, res: Response) => {
     }
 })
 
+router.delete('/users/:id', async (req: Request, res: Response) => {
+    try {
+        const user_id = parseInt(req.params.id);
+        await UserService.DeleteUser(user_id);
+        res.status(200).json({ message: 'User deleted successfully' });
+    } catch (error) {
+        const errorMessage = (error as Error).message;
+        if (errorMessage === 'User not found') {
+            res.status(404).json({ error: 'User not found' });
+        } else {
+            res.status(500).json({ error: errorMessage });
+        }
+    }
+})
+
 export default router;

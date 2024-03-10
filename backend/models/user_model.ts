@@ -20,10 +20,10 @@ class UserModel {
         }
     }
 
-    static async findUserByID(userId: number): Promise<User> {
+    static async findUserByID(user_id: number): Promise<User> {
         const query = 'SELECT * FROM users WHERE user_id = $1';
         try {   
-            const result = await db.query(query, [userId]);
+            const result = await db.query(query, [user_id]);
             return result.rows[0] || null;
         } catch (error) {
             console.error('Error finding user by ID: ', error);
@@ -41,5 +41,18 @@ class UserModel {
             throw new Error('Error creating user');
         }
     }
-}
+
+    static async DeleteUser(user_id: number): Promise<void> {
+        const query = 'DELETE FROM users WHERE user_id = $1';
+        try {
+            const result = await db.query(query, [user_id]);
+            if (result.rowCount === 0) {
+                throw new Error('User not found');
+            }
+        } catch (error) {
+            console.error('Error deleting user by ID', error);
+            throw error;
+        }
+    }
+ }
 export default UserModel;

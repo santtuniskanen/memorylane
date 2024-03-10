@@ -1,4 +1,4 @@
-# planner-backend
+# memorylane-backend
 
 To install dependencies:
 
